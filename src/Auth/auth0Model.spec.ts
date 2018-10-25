@@ -1,7 +1,7 @@
 import { readFileSync } from "fs"
 import { sign } from "jsonwebtoken"
+import * as moment from "moment"
 import { resolve } from "path"
-import * as moment from 'moment'
 import Auth0 from "./auth0Model"
 import Session from "./sessionModel"
 import { Auth0DecodedToken } from "./types"
@@ -148,7 +148,9 @@ describe("Auth0 Model", () => {
       const payload: Auth0DecodedToken = {
         sub: "test|userId",
         aud: "test.hostname",
-        exp: moment().add(1, "year").unix(),
+        exp: moment()
+          .add(1, "year")
+          .unix(),
         scope: "read:all",
       }
 
