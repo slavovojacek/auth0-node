@@ -165,9 +165,10 @@ describe("Auth0 Model", () => {
       const auth0 = new Auth0("test.hostname.com", initMockJwksClient)
 
       const decoded = await auth0.verifyToken(token)
-      const session = new Session(decoded)
+      const session = new Session(decoded, token)
 
       expect(session instanceof Session).toEqual(true)
+      expect(session.accessToken).toEqual(token)
       expect(session.audience).toEqual(payload.aud)
       expect(session.expiresAt).toEqual(new Date(payload.exp * 1000).toISOString())
       expect(session.scope).toEqual(payload.scope)

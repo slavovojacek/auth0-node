@@ -24,31 +24,23 @@ npm install @usefultools/auth0-node
 1) Initialise the client
 
 ```typescript
+import { Auth0 } from "auth0-node" 
+
 const auth0 = new Auth0("test.auth0.com")
 
 ```
 
-2) Verify, verify, verify
+2) Verify, verify, verify 😎
 
 ```typescript
-class Session {
-  userId: string
-  expiresAt: string
-  scope: string
+import { Auth0, Session } from "auth0-node" 
 
-  constructor(decoded: Auth0DecodedToken) {
-    const { sub, exp, scope } = decoded
+const auth0 = new Auth0("test.auth0.com")
 
-    this.userId = sub
-    this.expiresAt = new Date(exp * 1000).toISOString()
-    this.scope = scope
-  }
-}
-
-async function setupSession(): Session | null {
+async function setupSession(token: string): Promise<Session | null> {
   try {
     const decoded = await auth0.verifyToken(token)
-    return new Session(decoded)
+    return new Session(decoded, token)
   } catch (err) {
     console.log(err)
     return null
