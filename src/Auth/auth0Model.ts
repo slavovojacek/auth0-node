@@ -1,5 +1,5 @@
 import { isNonEmptyString, isObject, isPresent } from "@usefultools/utils"
-import { verify, VerifyErrors } from "jsonwebtoken"
+import { decode, verify, VerifyErrors } from "jsonwebtoken"
 import * as jwksClient from "jwks-rsa"
 import { Auth0DecodedToken } from "./types"
 
@@ -12,6 +12,10 @@ class Auth0 {
       "exp" in decoded &&
       "scope" in decoded
     )
+  }
+
+  static decodeIdToken = <T>(token: string): T => {
+    return decode(token) as T
   }
 
   private client: jwksClient.JwksClient
