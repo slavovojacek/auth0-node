@@ -6,7 +6,7 @@
 
 # Auth0 Node
 
-Simple Auth0 module for token verification
+Simple Auth0 module for token verification.
 
 ## Prereqs & Install
 
@@ -21,7 +21,7 @@ npm install @usefultools/auth0-node
 
 ## Usage
 
-1) Initialise the client
+1) Initialise the client 👾
 
 ```typescript
 import { Auth0 } from "auth0-node" 
@@ -52,8 +52,6 @@ async function setupSession(token: string): Promise<Session | null> {
 ## Contributing
 
 If you have comments, complaints, or ideas for improvements, feel free to open an issue or a pull request! See [Contributing guide](./CONTRIBUTING.md) for details about project setup, testing, etc.
-
-If you make or are considering making an app using WatermelonDB, please let us know!
 
 ## Author and license
 
