@@ -21,7 +21,7 @@ npm install @usefultools/auth0-node
 
 ## Usage
 
-1) Initialise the client 👾
+#### 1) Initialise the client 👾
 
 ```typescript
 import { Auth0 } from "auth0-node" 
@@ -30,7 +30,7 @@ const auth0 = new Auth0("test.auth0.com")
 
 ```
 
-2) Verify, verify, verify 😎
+#### 2) Verify, verify, verify 😎
 
 ```typescript
 import { Auth0, Session } from "auth0-node" 
