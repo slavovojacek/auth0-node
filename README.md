@@ -34,16 +34,33 @@ const auth0 = new Auth0("test.auth0.com")
 
 ```typescript
 import { Auth0, Session } from "@usefultools/auth0-node" 
+import { isNonEmptyString } from "@usefultools/utils"
 
 const auth0 = new Auth0("test.auth0.com")
 
-async function setupSession(token: string): Promise<Session | null> {
-  try {
-    const decoded = await auth0.verifyToken(token)
-    return new Session(decoded, token)
-  } catch (err) {
-    console.log(err)
-    return null
+async function isAuthorised(req: Request, res: Response, next: Next): Promise<void> {
+  const { headers } = req
+
+  const bearerStr = "Bearer "
+  const authHeader = headers[HeaderKey.Authorization]
+
+  if (isNonEmptyString(authHeader) && authHeader.startsWith(bearerStr)) {
+    const token = authHeader.substring(bearerStr.length, authHeader.length)
+
+    try {
+      const decoded = await auth0.verifyToken(token)
+
+      Object.assign(req, { ctx: {
+        ...req.ctx,
+        session: decoded,
+      }})
+
+      next()
+    } catch (err) {
+      res.error(unauthorized(err))
+    }
+  } else {
+    res.error(unauthorized("Invalid or missing token"))
   }
 }
 
